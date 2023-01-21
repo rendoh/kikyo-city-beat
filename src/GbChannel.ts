@@ -1,4 +1,5 @@
 import * as Tone from 'tone';
+import { keyState } from './keyState';
 
 type BgNote = {
   note: string;
@@ -45,5 +46,11 @@ export class GbChannel {
 
     const { note, dur } = value;
     this.synth.triggerAttackRelease(note, dur, time);
+    Tone.Draw.schedule(() => {
+      keyState.activate(note);
+    }, time);
+    Tone.Draw.schedule(() => {
+      keyState.deactivate(note);
+    }, time + Tone.Time(dur).toSeconds());
   }
 }

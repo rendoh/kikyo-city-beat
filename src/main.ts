@@ -1,6 +1,113 @@
 import * as Tone from 'tone';
+import { clock } from './clock';
 import { GbChannel } from './GbChannel';
 import { GbNoise, GbNoiseData } from './GbNoise';
+import { keyState } from './keyState';
+import { sizes } from './sizes';
+
+class Canvas {
+  private canvas = document.createElement('canvas');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  private ctx = this.canvas.getContext('2d')!;
+  private handleResize = this.resize.bind(this);
+  private handleTick = this.update.bind(this);
+
+  constructor() {
+    Object.assign(this.canvas.style, {
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      display: 'block',
+      pointerEvents: 'none',
+    } satisfies Partial<CSSStyleDeclaration>);
+    document.body.appendChild(this.canvas);
+
+    this.resize();
+    sizes.addEventListener('resize', this.handleResize);
+    clock.addEventListener('tick', this.handleTick);
+  }
+
+  private resize() {
+    this.canvas.setAttribute('width', `${sizes.w}px`);
+    this.canvas.setAttribute('height', `${sizes.h}px`);
+    Object.assign(this.canvas.style, {
+      width: `${sizes.w / sizes.pixelRatio}px`,
+      height: `${sizes.h / sizes.pixelRatio}px`,
+    });
+  }
+
+  private update() {
+    const { ctx } = this;
+    const { w, h } = sizes;
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineWidth = 1;
+
+    const radius = Math.min(w, h) / 3;
+    const keyboardHeight = Math.min(w, h) / 50;
+
+    ctx.translate(w / 2, h / 2);
+    ctx.rotate(Math.PI / 2 + clock.elapsed * 0.00025);
+    ctx.translate(-w / 2, -h / 2);
+
+    ctx.translate(w / 2, h / 2);
+
+    const outerRadius = radius + keyboardHeight / 2;
+    for (let i = 0; i < keyState.whiteKeyLength; i++) {
+      const skip = i % 7 === 2 || i % 7 === 6;
+      if (skip) {
+        continue;
+      }
+
+      const unitRad = (Math.PI * 2) / keyState.whiteKeyLength;
+      const shift = unitRad / 2;
+      const offsetWidthRad = unitRad / 6;
+      const rad1 = unitRad * i + shift + offsetWidthRad;
+      const rad2 = unitRad * (i + 1) + shift - offsetWidthRad;
+      const x1 = Math.cos(rad1);
+      const y1 = Math.sin(rad1);
+      const x2 = Math.cos(rad2);
+      const y2 = Math.sin(rad2);
+      ctx.beginPath();
+      ctx.moveTo(x1 * radius, y1 * radius);
+      ctx.lineTo(x1 * outerRadius, y1 * outerRadius);
+      ctx.lineTo(x2 * outerRadius, y2 * outerRadius);
+      ctx.lineTo(x2 * radius, y2 * radius);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.fillStyle = keyState.isActiveAt(i, true) ? '#fcba03' : '#6f6f6f';
+      ctx.fill();
+    }
+
+    const innerRadius = radius - keyboardHeight;
+    for (let i = 0; i < keyState.whiteKeyLength; i++) {
+      const unitRad = (Math.PI * 2) / keyState.whiteKeyLength;
+      const rad1 = unitRad * i;
+      const rad2 = unitRad * (i + 1);
+      const x1 = Math.cos(rad1);
+      const y1 = Math.sin(rad1);
+      const x2 = Math.cos(rad2);
+      const y2 = Math.sin(rad2);
+
+      ctx.beginPath();
+      ctx.moveTo(x1 * radius, y1 * radius);
+      ctx.lineTo(x1 * innerRadius, y1 * innerRadius);
+      ctx.lineTo(x2 * innerRadius, y2 * innerRadius);
+      ctx.lineTo(x2 * radius, y2 * radius);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.fillStyle = keyState.isActiveAt(i, false) ? '#fcba03' : '#fff';
+      ctx.fill();
+    }
+    ctx.resetTransform();
+  }
+
+  public dispose() {
+    sizes.removeEventListener('resize', this.handleResize);
+    clock.removeEventListener('tick', this.handleTick);
+  }
+}
+
+new Canvas();
 
 new GbChannel([
   // 1 ---
