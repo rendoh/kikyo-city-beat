@@ -1,54 +1,8 @@
 import * as Tone from 'tone';
+import { GbChannel } from './GbChannel';
+import { GbNoise, GbNoiseData } from './GbNoise';
 
-type Beat = {
-  note: string;
-  dur: string;
-} | null;
-
-const filter = new Tone.AutoFilter({
-  frequency: 6.2,
-  depth: 0.4,
-})
-  .toDestination()
-  .start();
-
-class Part {
-  private synth = new Tone.Synth({
-    volume: -18,
-    oscillator: {
-      type: 'square',
-    },
-    envelope: {
-      sustain: 1,
-      attack: 0,
-      decay: 0,
-      release: 0,
-    },
-  })
-    .connect(filter)
-    .toDestination();
-  private sequence: Tone.Sequence<Beat>;
-
-  constructor(
-    data: Required<
-      Required<ConstructorParameters<typeof Tone.Sequence<Beat>>>[0]['events']
-    >,
-  ) {
-    this.sequence = new Tone.Sequence(this.update.bind(this), data, '4n').start(
-      '1m',
-    );
-    this.sequence.loop = false;
-  }
-
-  private update(time: number, value: Beat) {
-    if (!value) return;
-
-    const { note, dur } = value;
-    this.synth.triggerAttackRelease(note, dur, time);
-  }
-}
-
-new Part([
+new GbChannel([
   // 1 ---
   [
     { note: 'G#4', dur: '16n' },
@@ -359,7 +313,7 @@ new Part([
   ],
 ]);
 
-new Part([
+new GbChannel([
   // 1 ---
   null,
   [
@@ -683,7 +637,7 @@ new Part([
   null,
 ]);
 
-new Part([
+new GbChannel([
   // 1 ---
   [
     [
@@ -1002,101 +956,21 @@ new Part([
   [null, { note: 'A#2', dur: '4n' }],
 ]);
 
-type NoiseBeat = 'kick' | 'hihat' | 'snare' | 'roll' | null;
-type NoiseData = Required<
-  Required<ConstructorParameters<typeof Tone.Sequence<NoiseBeat>>>[0]['events']
->;
-
-class NoisePart {
-  private kick = new Tone.NoiseSynth({
-    envelope: {
-      attack: 0.005,
-      decay: 0.12,
-      sustain: 0.005,
-    },
-    noise: {
-      type: 'brown',
-      playbackRate: 0.2,
-      volume: 8,
-    },
-  }).toDestination();
-  private snare = new Tone.NoiseSynth({
-    envelope: {
-      attack: 0.01,
-      decay: 0.28,
-      sustain: 0.01,
-    },
-    noise: {
-      type: 'white',
-      volume: -8,
-    },
-  }).toDestination();
-  private hihat = new Tone.NoiseSynth({
-    envelope: {
-      attack: 0.01,
-      decay: 0.18,
-      sustain: 0,
-    },
-    noise: {
-      type: 'pink',
-      volume: -6,
-    },
-  }).toDestination();
-  private roll = new Tone.NoiseSynth({
-    envelope: {
-      attack: 0.01,
-      decay: 0.3,
-      sustain: 0.12,
-    },
-    noise: {
-      type: 'white',
-      volume: -7,
-    },
-  }).toDestination();
-  private sequence: Tone.Sequence<NoiseBeat>;
-
-  constructor(data: NoiseData) {
-    this.sequence = new Tone.Sequence(this.update.bind(this), data, '4n').start(
-      0,
-    );
-    this.sequence.loop = false;
-  }
-
-  private update(time: number, type: NoiseBeat) {
-    if (!type) return;
-
-    switch (type) {
-      case 'kick':
-        this.kick.triggerAttackRelease('8n', time);
-        break;
-      case 'snare':
-        this.snare.triggerAttackRelease('8n', time);
-        break;
-      case 'hihat':
-        this.hihat.triggerAttackRelease('8n', time);
-        break;
-      case 'roll':
-        this.roll.triggerAttackRelease('8n', time);
-        break;
-    }
-  }
-}
-
-const noisePatternA: NoiseData = [
+const noisePatternA: GbNoiseData = [
   ['snare', 'snare', 'kick', 'kick'],
   ['snare', 'hihat'],
   ['hihat', 'hihat', 'hihat', null],
   ['hihat', 'hihat', 'hihat', 'hihat'],
 ];
 
-const noisePatternB: NoiseData = [
+const noisePatternB: GbNoiseData = [
   ['kick', ['hihat', 'hihat']],
   ['hihat', ['kick', 'kick']],
   [null, 'kick'],
   ['snare', 'kick'],
 ];
 
-new NoisePart([
+new GbNoise([
   // 1 --- intro
   ['kick', 'snare'],
   ['kick', 'kick', 'snare', null],
