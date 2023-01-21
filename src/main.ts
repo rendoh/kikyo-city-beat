@@ -1009,7 +1009,7 @@ new Part([
   [null, { note: 'A#2', dur: '4n' }],
 ]);
 
-type NoiseBeat = 'kick' | 'hihat' | 'snare' | null;
+type NoiseBeat = 'kick' | 'hihat' | 'snare' | 'roll' | null;
 type NoiseData = Required<
   Required<ConstructorParameters<typeof Tone.Sequence<NoiseBeat>>>[0]['events']
 >;
@@ -1024,7 +1024,7 @@ class NoisePart {
     noise: {
       type: 'brown',
       playbackRate: 0.2,
-      volume: 6,
+      volume: 8,
     },
   }).toDestination();
   private snare = new Tone.NoiseSynth({
@@ -1049,6 +1049,17 @@ class NoisePart {
       volume: -6,
     },
   }).toDestination();
+  private roll = new Tone.NoiseSynth({
+    envelope: {
+      attack: 0,
+      decay: 0.32,
+      sustain: 0.05,
+    },
+    noise: {
+      type: 'white',
+      volume: -9,
+    },
+  }).toDestination();
   private sequence: Tone.Sequence<NoiseBeat>;
 
   constructor(data: NoiseData) {
@@ -1070,6 +1081,9 @@ class NoisePart {
         break;
       case 'hihat':
         this.hihat.triggerAttackRelease('8n', time);
+        break;
+      case 'roll':
+        this.roll.triggerAttackRelease('8n', time);
         break;
     }
   }
@@ -1094,7 +1108,7 @@ new NoisePart([
   ['kick', 'snare'],
   ['kick', 'kick', 'snare', null],
   'snare',
-  'snare',
+  'roll',
 
   // 2 --- A
   ...noisePatternA,
