@@ -38,13 +38,6 @@ class Part {
       '1m',
     );
     this.sequence.loop = false;
-
-    window.addEventListener('keyup', ({ key }) => {
-      if (key === 'Escape') {
-        // this.synth.volume.value = -160;
-        this.synth.oscillator.mute = !this.synth.oscillator.mute;
-      }
-    });
   }
 
   private update(time: number, value: Beat) {
@@ -1017,9 +1010,9 @@ type NoiseData = Required<
 class NoisePart {
   private kick = new Tone.NoiseSynth({
     envelope: {
-      attack: 0,
-      decay: 0.1,
-      sustain: 0,
+      attack: 0.005,
+      decay: 0.12,
+      sustain: 0.005,
     },
     noise: {
       type: 'brown',
@@ -1029,7 +1022,7 @@ class NoisePart {
   }).toDestination();
   private snare = new Tone.NoiseSynth({
     envelope: {
-      attack: 0,
+      attack: 0.01,
       decay: 0.28,
       sustain: 0.01,
     },
@@ -1040,7 +1033,7 @@ class NoisePart {
   }).toDestination();
   private hihat = new Tone.NoiseSynth({
     envelope: {
-      attack: 0,
+      attack: 0.01,
       decay: 0.18,
       sustain: 0,
     },
@@ -1051,7 +1044,7 @@ class NoisePart {
   }).toDestination();
   private roll = new Tone.NoiseSynth({
     envelope: {
-      attack: 0,
+      attack: 0.01,
       decay: 0.3,
       sustain: 0.12,
     },
