@@ -265,7 +265,7 @@ new Part([
   // 14 ---
   [
     { note: 'A4', dur: '8n' },
-    { note: 'F#4', dur: '8n' },
+    { note: 'F#4', dur: '16n' },
   ],
   [
     { note: 'A4', dur: '8n' },
@@ -571,7 +571,7 @@ new Part([
   // 14 ---
   [
     { note: 'F#4', dur: '8n' },
-    { note: 'C#4', dur: '8n' },
+    { note: 'C#4', dur: '16n' },
   ],
   [
     { note: 'F#4', dur: '8n' },
@@ -1137,6 +1137,4 @@ Tone.Transport.loop = true;
 document.querySelector('#play')?.addEventListener('click', async () => {
   await Tone.start();
   Tone.Transport.toggle();
-  // Tone.Transport.stop();
-  // Tone.Transport.start('+0', '16:0:0');
 });
