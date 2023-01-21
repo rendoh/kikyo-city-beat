@@ -40,10 +40,21 @@ class Canvas {
     const { ctx } = this;
     const { w, h } = sizes;
     ctx.clearRect(0, 0, w, h);
-    ctx.lineWidth = 1;
 
-    const radius = Math.min(w, h) / 3;
-    const keyboardHeight = Math.min(w, h) / 50;
+    const radius = Math.min(w, h) * 0.4;
+    const keyboardHeight = Math.min(w, h) / 35;
+
+    ctx.fillStyle = '#fc0303';
+    ctx.strokeStyle = '#333';
+    ctx.lineWidth = Math.min(w, h) / 50;
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, radius - keyboardHeight / 2, 0, Math.PI, true);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 3;
 
     ctx.translate(w / 2, h / 2);
     ctx.rotate(Math.PI / 2 + clock.elapsed * 0.00025);
@@ -51,7 +62,7 @@ class Canvas {
 
     ctx.translate(w / 2, h / 2);
 
-    const outerRadius = radius + keyboardHeight / 2;
+    const outerRadius = radius + keyboardHeight * 0.4;
     for (let i = 0; i < keyState.whiteKeyLength; i++) {
       const skip = i % 7 === 2 || i % 7 === 6;
       if (skip) {
@@ -74,11 +85,12 @@ class Canvas {
       ctx.lineTo(x2 * radius, y2 * radius);
       ctx.closePath();
       ctx.stroke();
-      ctx.fillStyle = keyState.isActiveAt(i, true) ? '#fcba03' : '#6f6f6f';
+      ctx.fillStyle = keyState.isActiveAt(i, true) ? '#fcba03' : '#333';
       ctx.fill();
     }
 
     const innerRadius = radius - keyboardHeight;
+    ctx.save();
     for (let i = 0; i < keyState.whiteKeyLength; i++) {
       const unitRad = (Math.PI * 2) / keyState.whiteKeyLength;
       const rad1 = unitRad * i;
@@ -88,6 +100,7 @@ class Canvas {
       const x2 = Math.cos(rad2);
       const y2 = Math.sin(rad2);
 
+      ctx.fillStyle = keyState.isActiveAt(i, false) ? '#fcba03' : '#fff';
       ctx.beginPath();
       ctx.moveTo(x1 * radius, y1 * radius);
       ctx.lineTo(x1 * innerRadius, y1 * innerRadius);
@@ -95,9 +108,10 @@ class Canvas {
       ctx.lineTo(x2 * radius, y2 * radius);
       ctx.closePath();
       ctx.stroke();
-      ctx.fillStyle = keyState.isActiveAt(i, false) ? '#fcba03' : '#fff';
       ctx.fill();
     }
+    ctx.restore();
+
     ctx.resetTransform();
   }
 
@@ -1085,13 +1099,7 @@ new GbNoise([
   'roll',
 
   // 2 --- A
-  ...noisePatternA,
-
-  // 3 ---
-  ...noisePatternA,
-
-  // 4 ---
-  ...noisePatternA,
+  ...[...Array(3)].flatMap(() => noisePatternA),
 
   // 5 ---
   ['snare', null, 'kick', 'kick'],
@@ -1100,22 +1108,7 @@ new GbNoise([
   [null, 'kick'],
 
   // 6 --- B
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
-  ...noisePatternB,
+  ...[...Array(16)].flatMap(() => noisePatternB),
 ]);
 
 Tone.Transport.bpm.value = 116.6;
@@ -1124,5 +1117,7 @@ Tone.Transport.loop = true;
 
 document.querySelector('#play')?.addEventListener('click', async () => {
   await Tone.start();
-  Tone.Transport.toggle();
+  // Tone.Transport.toggle();
+  Tone.Transport.stop();
+  Tone.Transport.start('+0', '9:0:0');
 });
