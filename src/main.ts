@@ -638,7 +638,7 @@ new Part([
   [
     { note: 'G#5', dur: '16n' },
     { note: 'F5', dur: '16n' },
-    { note: 'G#4', dur: '16n' },
+    { note: 'B4', dur: '16n' },
     { note: 'F5', dur: '16n' },
   ],
   [
