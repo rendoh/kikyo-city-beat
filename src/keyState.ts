@@ -23,12 +23,18 @@ class KeyState {
   }
 
   public deactivate(note: string) {
-    this.state[note] -= 1;
+    this.state[note] = Math.max(0, this.state[note] - 1);
   }
 
   public isActiveAt(index: number, sharp?: boolean) {
     const note = getNoteByIndex(index, sharp);
     return this.state[note];
+  }
+
+  public reset() {
+    Object.keys(this.state).forEach((key) => {
+      this.state[key] = 0;
+    });
   }
 }
 
@@ -38,3 +44,7 @@ export function getNoteByIndex(index: number, sharp?: boolean) {
   const octave = Math.floor(index / 7) + 2;
   return `${baseNotes[index % 7]}${sharp ? '#' : ''}${octave}`;
 }
+
+document.addEventListener('visibilitychange', () => {
+  keyState.reset();
+});

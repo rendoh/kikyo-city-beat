@@ -1,3 +1,4 @@
+import 'the-new-css-reset';
 import * as Tone from 'tone';
 import { clock } from './clock';
 import { GbChannel } from './GbChannel';
@@ -1115,7 +1116,13 @@ Tone.Transport.bpm.value = 116.6;
 Tone.Transport.setLoopPoints('5m', '21m');
 Tone.Transport.loop = true;
 
-document.querySelector('#play')?.addEventListener('click', async () => {
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const playButton = document.querySelector('.play')!;
+
+async function toggle() {
   await Tone.start();
   Tone.Transport.toggle();
-});
+  playButton.classList.toggle('is-playing');
+}
+
+playButton.addEventListener('click', toggle);
