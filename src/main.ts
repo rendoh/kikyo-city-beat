@@ -799,7 +799,7 @@ new GbChannel([
   null,
 
   // 4 ---
-  { note: 'E2', dur: '4n' },
+  { note: 'F#2', dur: '4n' },
   [
     { note: 'C#3', dur: '16n' },
     { note: 'A#3', dur: '4n' },
