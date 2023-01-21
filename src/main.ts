@@ -35,7 +35,7 @@ class Part {
     >,
   ) {
     this.sequence = new Tone.Sequence(this.update.bind(this), data, '4n').start(
-      0,
+      '1m',
     );
     this.sequence.loop = false;
 
@@ -302,7 +302,7 @@ new Part([
   // 16 ---
   [
     { note: 'F#5', dur: '8n' },
-    { note: 'C#5', dur: '8n' },
+    { note: 'C#5', dur: '16n' },
   ],
   [
     { note: 'F#5', dur: '8n' },
@@ -608,7 +608,7 @@ new Part([
   // 16 ---
   [
     { note: 'A4', dur: '8n' },
-    { note: 'F#4', dur: '8n' },
+    { note: 'F#4', dur: '16n' },
   ],
   [
     { note: 'A4', dur: '8n' },
@@ -1009,13 +1009,134 @@ new Part([
   [null, { note: 'A#2', dur: '4n' }],
 ]);
 
+type NoiseBeat = 'kick' | 'hihat' | 'snare' | null;
+type NoiseData = Required<
+  Required<ConstructorParameters<typeof Tone.Sequence<NoiseBeat>>>[0]['events']
+>;
+
+class NoisePart {
+  private kick = new Tone.NoiseSynth({
+    envelope: {
+      attack: 0,
+      decay: 0.1,
+      sustain: 0,
+    },
+    noise: {
+      type: 'brown',
+      playbackRate: 0.2,
+      volume: 6,
+    },
+  }).toDestination();
+  private snare = new Tone.NoiseSynth({
+    envelope: {
+      attack: 0,
+      decay: 0.28,
+      sustain: 0.01,
+    },
+    noise: {
+      type: 'white',
+      volume: -8,
+    },
+  }).toDestination();
+  private hihat = new Tone.NoiseSynth({
+    envelope: {
+      attack: 0,
+      decay: 0.18,
+      sustain: 0,
+    },
+    noise: {
+      type: 'pink',
+      volume: -6,
+    },
+  }).toDestination();
+  private sequence: Tone.Sequence<NoiseBeat>;
+
+  constructor(data: NoiseData) {
+    this.sequence = new Tone.Sequence(this.update.bind(this), data, '4n').start(
+      0,
+    );
+    this.sequence.loop = false;
+  }
+
+  private update(time: number, type: NoiseBeat) {
+    if (!type) return;
+
+    switch (type) {
+      case 'kick':
+        this.kick.triggerAttackRelease('8n', time);
+        break;
+      case 'snare':
+        this.snare.triggerAttackRelease('8n', time);
+        break;
+      case 'hihat':
+        this.hihat.triggerAttackRelease('8n', time);
+        break;
+    }
+  }
+}
+
+const noisePatternA: NoiseData = [
+  ['snare', 'snare', 'kick', 'kick'],
+  ['snare', 'hihat'],
+  ['hihat', 'hihat', 'hihat', null],
+  ['hihat', 'hihat', 'hihat', 'hihat'],
+];
+
+const noisePatternB: NoiseData = [
+  ['kick', ['hihat', 'hihat']],
+  ['hihat', ['kick', 'kick']],
+  [null, 'kick'],
+  ['snare', 'kick'],
+];
+
+new NoisePart([
+  // 1 --- intro
+  ['kick', 'snare'],
+  ['kick', 'kick', 'snare', null],
+  'snare',
+  'snare',
+
+  // 2 --- A
+  ...noisePatternA,
+
+  // 3 ---
+  ...noisePatternA,
+
+  // 4 ---
+  ...noisePatternA,
+
+  // 5 ---
+  ['snare', null, 'kick', 'kick'],
+  ['snare', 'snare'],
+  null,
+  [null, 'kick'],
+
+  // 6 --- B
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+  ...noisePatternB,
+]);
+
 Tone.Transport.bpm.value = 116.6;
-Tone.Transport.setLoopPoints('4m', '20m');
+Tone.Transport.setLoopPoints('5m', '21m');
 Tone.Transport.loop = true;
 
 document.querySelector('#play')?.addEventListener('click', async () => {
   await Tone.start();
   Tone.Transport.toggle();
   // Tone.Transport.stop();
-  // Tone.Transport.start('+0', '18:0:0');
+  // Tone.Transport.start('+0', '16:0:0');
 });
