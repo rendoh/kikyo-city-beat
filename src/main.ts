@@ -572,8 +572,8 @@ new GbChannel([
     { note: 'G#4', dur: '8n' },
   ],
   [
-    { note: 'B4', dur: '16n' },
-    { note: 'B4', dur: '16n' },
+    { note: 'A#4', dur: '16n' },
+    { note: 'A#4', dur: '16n' },
   ],
   [
     { note: 'D#4', dur: '8n' },
@@ -1117,7 +1117,5 @@ Tone.Transport.loop = true;
 
 document.querySelector('#play')?.addEventListener('click', async () => {
   await Tone.start();
-  // Tone.Transport.toggle();
-  Tone.Transport.stop();
-  Tone.Transport.start('+0', '9:0:0');
+  Tone.Transport.toggle();
 });
