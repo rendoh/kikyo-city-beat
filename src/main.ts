@@ -1052,12 +1052,12 @@ class NoisePart {
   private roll = new Tone.NoiseSynth({
     envelope: {
       attack: 0,
-      decay: 0.32,
-      sustain: 0.05,
+      decay: 0.3,
+      sustain: 0.12,
     },
     noise: {
       type: 'white',
-      volume: -9,
+      volume: -7,
     },
   }).toDestination();
   private sequence: Tone.Sequence<NoiseBeat>;
