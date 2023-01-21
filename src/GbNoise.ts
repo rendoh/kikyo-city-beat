@@ -1,4 +1,5 @@
 import * as Tone from 'tone';
+import { noiseEventEmitter } from './noiseEventEmitter';
 
 export type GbNoiseType = 'kick' | 'hihat' | 'snare' | 'roll' | null;
 
@@ -65,6 +66,10 @@ export class GbNoise {
 
   private update(time: number, type: GbNoiseType) {
     if (!type) return;
+
+    Tone.Draw.schedule(() => {
+      noiseEventEmitter.emit(type);
+    }, time);
 
     switch (type) {
       case 'kick':
