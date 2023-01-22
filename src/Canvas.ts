@@ -18,6 +18,7 @@ export class Canvas {
   private iconColor = '#333';
   private isPlaying = false;
   private bound = 0;
+  private rotation = 0;
 
   constructor() {
     Object.assign(this.canvas.style, {
@@ -152,8 +153,12 @@ export class Canvas {
   private drawKeys() {
     const { ctx } = this;
     const { w, h } = sizes;
+
+    if (this.isPlaying) {
+      this.rotation += clock.delta * 0.00025;
+    }
     ctx.translate(w / 2, h / 2);
-    ctx.rotate(Math.PI / 2 + clock.elapsed * 0.00025);
+    ctx.rotate(Math.PI / 2 + this.rotation);
     ctx.translate(-w / 2, -h / 2);
 
     ctx.translate(w / 2, h / 2);
