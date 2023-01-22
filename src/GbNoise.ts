@@ -53,6 +53,7 @@ export class GbNoise {
     },
   }).toDestination();
   private sequence: Tone.Sequence<GbNoiseType>;
+  private isMuted = false;
 
   constructor(data: GbNoiseData) {
     this.sequence = new Tone.Sequence(this.update.bind(this), data, '4n');
@@ -61,6 +62,8 @@ export class GbNoise {
 
   private update(time: number, type: GbNoiseType) {
     if (!type) return;
+
+    if (this.isMuted) return;
 
     Tone.Draw.schedule(() => {
       noiseEventEmitter.emit(type);
@@ -88,5 +91,9 @@ export class GbNoise {
 
   public stop(time?: TransportTime) {
     this.sequence.stop(time);
+  }
+
+  public mute(muted: boolean) {
+    this.isMuted = muted;
   }
 }

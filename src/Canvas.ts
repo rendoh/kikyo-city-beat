@@ -3,6 +3,7 @@ import { keyState } from './keyState';
 import { NoiseEvent, noiseEventEmitter } from './noiseEventEmitter';
 import { sizes } from './sizes';
 import { lerp } from './utils';
+import { vars } from './vars';
 
 export class Canvas {
   private canvas = document.createElement('canvas');
@@ -186,7 +187,7 @@ export class Canvas {
     const { w, h } = sizes;
 
     if (this.isPlaying) {
-      this.rotation += clock.delta * 0.00025;
+      this.rotation += clock.delta * 0.001 * vars.rotationSpeed;
     }
     ctx.translate(w / 2, h / 2);
     ctx.rotate(Math.PI / 2 + this.rotation);

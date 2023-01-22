@@ -637,7 +637,7 @@ const ch2 = new GbChannel([
   null,
 ]);
 
-const bass = new GbChannel([
+const ch3 = new GbChannel([
   // 1 ---
   [
     [
@@ -993,7 +993,7 @@ const noise = new GbNoise([
 class KikyoCityBgm {
   private ch1 = ch1;
   private ch2 = ch2;
-  private bass = bass;
+  private ch3 = ch3;
   private noise = noise;
 
   public start() {
@@ -1001,15 +1001,19 @@ class KikyoCityBgm {
     Tone.Transport.setLoopPoints('5m', '21m');
     this.ch1.start('1m');
     this.ch2.start('1m');
-    this.bass.start('1m');
+    this.ch3.start('1m');
     this.noise.start();
   }
 
   public stop() {
     this.ch1.stop();
     this.ch2.stop();
-    this.bass.stop();
+    this.ch3.stop();
     this.noise.stop();
+  }
+
+  public mute(ch: 'ch1' | 'ch2' | 'ch3' | 'noise', muted: boolean) {
+    this[ch].mute(muted);
   }
 }
 

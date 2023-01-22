@@ -46,7 +46,9 @@ export class GbChannel {
     const { note, dur } = value;
     this.synth.triggerAttackRelease(note, dur, time);
     Tone.Draw.schedule(() => {
-      keyState.activate(note);
+      if (!this.synth.oscillator.mute) {
+        keyState.activate(note);
+      }
     }, time);
     Tone.Draw.schedule(() => {
       keyState.deactivate(note);
@@ -59,5 +61,9 @@ export class GbChannel {
 
   public stop(time?: TransportTime) {
     this.sequence.stop(time);
+  }
+
+  public mute(muted: boolean) {
+    this.synth.oscillator.mute = muted;
   }
 }
