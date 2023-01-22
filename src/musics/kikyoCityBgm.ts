@@ -1,6 +1,7 @@
 import * as Tone from 'tone';
 import { GbChannel } from '../GbChannel';
 import { GbNoise, GbNoiseData } from '../GbNoise';
+import { MusicBase } from './Music';
 
 const ch1 = new GbChannel([
   // 1 ---
@@ -990,30 +991,20 @@ const noise = new GbNoise([
   ...[...Array(16)].flatMap(() => noisePatternB),
 ]);
 
-class KikyoCityBgm {
-  private ch1 = ch1;
-  private ch2 = ch2;
-  private ch3 = ch3;
-  private noise = noise;
+class KikyoCityBgm extends MusicBase {
+  protected ch1 = ch1;
+  protected ch2 = ch2;
+  protected ch3 = ch3;
+  protected noise = noise;
+  public bpm = 116.6;
 
   public start() {
-    Tone.Transport.bpm.value = 116.6;
+    Tone.Transport.bpm.value = this.bpm;
     Tone.Transport.setLoopPoints('5m', '21m');
     this.ch1.start('1m');
     this.ch2.start('1m');
     this.ch3.start('1m');
     this.noise.start();
-  }
-
-  public stop() {
-    this.ch1.stop();
-    this.ch2.stop();
-    this.ch3.stop();
-    this.noise.stop();
-  }
-
-  public mute(ch: 'ch1' | 'ch2' | 'ch3' | 'noise', muted: boolean) {
-    this[ch].mute(muted);
   }
 }
 

@@ -5,7 +5,7 @@ import { sizes } from './sizes';
 import { lerp } from './utils';
 import { vars } from './vars';
 
-export class Canvas {
+class Canvas {
   private canvas = document.createElement('canvas');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   private ctx = this.canvas.getContext('2d')!;
@@ -272,4 +272,14 @@ export class Canvas {
   public toggle() {
     this.isPlaying = !this.isPlaying;
   }
+
+  public start() {
+    this.isPlaying = true;
+  }
+
+  public stop() {
+    this.isPlaying = false;
+  }
 }
+
+export const canvas = new Canvas();

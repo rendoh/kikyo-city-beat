@@ -1,26 +1,44 @@
 import 'the-new-css-reset';
+import './player';
 import * as Tone from 'tone';
-import { Canvas } from './Canvas';
-import { kikyoCityBgm } from './musics/kikyoCityBgm';
+import GUI from 'lil-gui';
+import { player } from './player';
+import { vars } from './vars';
+const gui = new GUI();
 
-Tone.Transport.loop = true;
+gui.close();
 
-const canvas = new Canvas();
+const bpmController = gui
+  .add(vars, 'bpm', 30, 360, 0.1)
+  .name('BPM')
+  .onChange((value: number) => {
+    Tone.Transport.bpm.value = value;
+  });
 
-kikyoCityBgm.start();
+gui
+  .add(vars, 'music', player.musicTitles)
+  .setValue(player.selectedMusicTitle)
+  .onChange((title: string) => {
+    player.stop();
+    player.select(title as keyof typeof player.musics);
+    bpmController.setValue(player.musics[player.selectedMusicTitle].bpm);
+  });
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const playButton = document.querySelector<HTMLButtonElement>('.play')!;
+gui.add(vars, 'rotationSpeed', -1, 1, 0.1).name('rotation speed');
 
-async function toggle() {
-  await Tone.start();
-  Tone.Transport.toggle();
-  canvas.toggle();
-}
-
-playButton.addEventListener('click', toggle);
-
-if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  playButton.addEventListener('mouseenter', () => canvas.activateIconColor());
-  playButton.addEventListener('mouseleave', () => canvas.deactivateIconColor());
-}
+gui
+  .add(vars, 'muteCh1')
+  .name('mute ch1')
+  .onChange((muted: boolean) => player.mute('ch1', muted));
+gui
+  .add(vars, 'muteCh2')
+  .name('mute ch2')
+  .onChange((muted: boolean) => player.mute('ch2', muted));
+gui
+  .add(vars, 'muteCh3')
+  .name('mute ch3')
+  .onChange((muted: boolean) => player.mute('ch3', muted));
+gui
+  .add(vars, 'muteNoise')
+  .name('mute noise')
+  .onChange((muted: boolean) => player.mute('noise', muted));
