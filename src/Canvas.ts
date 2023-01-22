@@ -93,11 +93,13 @@ class Canvas {
     const ratio = 1 - Math.pow(1 - ratio60, clock.delta / delta60);
     this.line = lerp(this.line, 0, ratio);
     const amplitude = ballRadius * 0.055;
-    const wavelength = ballRadius * 0.00008;
-    for (let i = 0; i < ballRadius * 2; i += 15) {
-      const x = i;
+    const step = ballRadius;
+    for (let i = 0; i < step; i++) {
+      const x = (i / step) * ballRadius * 2;
       const y =
-        Math.sin(i * wavelength + clock.elapsed * 0.03) * amplitude * this.line;
+        Math.sin(i * (40 / step) + clock.elapsed * 0.03) *
+        amplitude *
+        this.line;
       ctx.lineTo(x, y);
     }
     ctx.resetTransform();
