@@ -7,8 +7,8 @@ type GbNote = {
 } | null;
 
 export type GbChannelData = Required<
-  Required<ConstructorParameters<typeof Tone.Sequence<GbNote>>>[0]['events']
->;
+  ConstructorParameters<typeof Tone.Sequence<GbNote>>
+>[0]['events'];
 
 const filter = new Tone.AutoFilter({
   frequency: 6.2,

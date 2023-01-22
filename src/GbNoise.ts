@@ -4,10 +4,8 @@ import { noiseEventEmitter } from './noiseEventEmitter';
 export type GbNoiseType = 'kick' | 'hihat' | 'snare' | 'roll' | null;
 
 export type GbNoiseData = Required<
-  Required<
-    ConstructorParameters<typeof Tone.Sequence<GbNoiseType>>
-  >[0]['events']
->;
+  ConstructorParameters<typeof Tone.Sequence<GbNoiseType>>
+>[0]['events'];
 
 export class GbNoise {
   private kick = new Tone.NoiseSynth({
