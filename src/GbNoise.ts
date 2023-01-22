@@ -1,8 +1,6 @@
 import * as Tone from 'tone';
 import { TransportTime } from 'tone/build/esm/core/type/Units';
-import { noiseEventEmitter } from './noiseEventEmitter';
-
-export type GbNoiseType = 'kick' | 'hihat' | 'snare' | 'roll' | null;
+import { GbNoiseType, noiseEventEmitter } from './noiseEventEmitter';
 
 export type GbNoiseData = Required<
   ConstructorParameters<typeof Tone.Sequence<GbNoiseType>>

@@ -11,13 +11,19 @@ export class Canvas {
   private handleResize = this.resize.bind(this);
   private handleTick = this.update.bind(this);
   private handleNoise = ({ detail: { type } }: NoiseEvent) => {
-    this.bound = type === 'kick' ? -2 : 1;
+    this.bound = type === 'kick' ? -2 : 0.5;
+    if (type === 'snare' || type === 'roll') {
+      this.line = 2.2;
+    } else if (type !== 'kick') {
+      this.line = 0.5;
+    }
   };
   private radius = 0;
   private keyboardHeight = 0;
   private iconColor = '#333';
   private isPlaying = false;
   private bound = 0;
+  private line = 0;
   private rotation = 0;
 
   constructor() {
@@ -68,7 +74,22 @@ export class Canvas {
     ctx.strokeStyle = '#333';
     ctx.lineWidth = Math.min(w, h) / 50;
     ctx.beginPath();
-    ctx.arc(w / 2, h / 2, radius - keyboardHeight / 2, 0, Math.PI, true);
+    const ballRadius = radius - keyboardHeight / 2;
+    ctx.arc(w / 2, h / 2, ballRadius, 0, Math.PI, true);
+    ctx.translate(w / 2 - ballRadius, h / 2);
+    const ratio60 = 0.2;
+    const delta60 = 16;
+    const ratio = 1 - Math.pow(1 - ratio60, clock.delta / delta60);
+    this.line = lerp(this.line, 0, ratio);
+    const amplitude = ballRadius * 0.055;
+    const wavelength = ballRadius * 0.00008;
+    for (let i = 0; i < ballRadius * 2; i += 15) {
+      const x = i;
+      const y =
+        Math.sin(i * wavelength + clock.elapsed * 0.03) * amplitude * this.line;
+      ctx.lineTo(x, y);
+    }
+    ctx.resetTransform();
     ctx.closePath();
     ctx.fill();
     ctx.stroke();

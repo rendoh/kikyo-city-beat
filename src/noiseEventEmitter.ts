@@ -1,6 +1,8 @@
 import { TypedEventTarget } from './TypedEventTarget';
 
-export type NoiseEvent = CustomEvent<{ type: string }>;
+export type GbNoiseType = 'kick' | 'hihat' | 'snare' | 'roll' | null;
+
+export type NoiseEvent = CustomEvent<{ type: GbNoiseType }>;
 
 export type NoiseEventMap = {
   noise: NoiseEvent;
