@@ -1,4 +1,5 @@
 import * as Tone from 'tone';
+import { TransportTime } from 'tone/build/esm/core/type/Units';
 import { keyState } from './keyState';
 
 type GbNote = {
@@ -35,9 +36,7 @@ export class GbChannel {
   private sequence: Tone.Sequence<GbNote>;
 
   constructor(data: GbChannelData) {
-    this.sequence = new Tone.Sequence(this.update.bind(this), data, '4n').start(
-      '1m',
-    );
+    this.sequence = new Tone.Sequence(this.update.bind(this), data, '4n');
     this.sequence.loop = false;
   }
 
@@ -52,5 +51,13 @@ export class GbChannel {
     Tone.Draw.schedule(() => {
       keyState.deactivate(note);
     }, time + Tone.Time(dur).toSeconds());
+  }
+
+  public start(time?: TransportTime, offset?: number) {
+    this.sequence.start(time, offset);
+  }
+
+  public stop(time?: TransportTime) {
+    this.sequence.stop(time);
   }
 }

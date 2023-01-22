@@ -1,4 +1,5 @@
 import * as Tone from 'tone';
+import { TransportTime } from 'tone/build/esm/core/type/Units';
 import { noiseEventEmitter } from './noiseEventEmitter';
 
 export type GbNoiseType = 'kick' | 'hihat' | 'snare' | 'roll' | null;
@@ -56,9 +57,7 @@ export class GbNoise {
   private sequence: Tone.Sequence<GbNoiseType>;
 
   constructor(data: GbNoiseData) {
-    this.sequence = new Tone.Sequence(this.update.bind(this), data, '4n').start(
-      0,
-    );
+    this.sequence = new Tone.Sequence(this.update.bind(this), data, '4n');
     this.sequence.loop = false;
   }
 
@@ -83,5 +82,13 @@ export class GbNoise {
         this.roll.triggerAttackRelease('8n', time);
         break;
     }
+  }
+
+  public start(time?: TransportTime, offset?: number) {
+    this.sequence.start(time, offset);
+  }
+
+  public stop(time?: TransportTime) {
+    this.sequence.stop(time);
   }
 }
