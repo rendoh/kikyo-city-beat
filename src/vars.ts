@@ -1,5 +1,5 @@
 export const vars = {
-  bpm: 116.6,
+  bpm: 100,
   music: '',
   rotationSpeed: 0.3,
   muteCh1: false,

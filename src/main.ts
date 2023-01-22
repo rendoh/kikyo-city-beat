@@ -11,6 +11,7 @@ gui.close();
 const bpmController = gui
   .add(vars, 'bpm', 30, 360, 0.1)
   .name('BPM')
+  .setValue(player.musics[player.selectedMusicTitle].bpm)
   .onChange((value: number) => {
     Tone.Transport.bpm.value = value;
   });
