@@ -3,6 +3,8 @@ import { GbChannel } from '../GbChannel';
 import { GbNoise } from '../GbNoise';
 import { MusicBase } from './Music';
 
+// WIP
+
 const ch1 = new GbChannel([
   // 1
   [

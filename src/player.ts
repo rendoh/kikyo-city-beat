@@ -1,19 +1,17 @@
 import * as Tone from 'tone';
 import { canvas } from './Canvas';
 import { kikyoCityBgm } from './musics/kikyoCityBgm';
-import { stayGold } from './musics/stayGold';
 
 const musics = {
   'GB版ポケモン金・銀キキョウシティ': kikyoCityBgm,
-  'Hi-STANDARD Stay Gold': stayGold,
 } as const;
 
 class Player {
   public kikyoCityBgm = kikyoCityBgm;
-  public stayGold = stayGold;
   public musics = musics;
   public musicTitles = Object.keys(musics);
-  public selectedMusicTitle: keyof typeof musics = 'Hi-STANDARD Stay Gold';
+  public selectedMusicTitle: keyof typeof musics =
+    'GB版ポケモン金・銀キキョウシティ';
 
   constructor() {
     this.musics[this.selectedMusicTitle].start();

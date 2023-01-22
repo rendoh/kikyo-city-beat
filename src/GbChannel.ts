@@ -1,9 +1,9 @@
 import * as Tone from 'tone';
-import { TransportTime } from 'tone/build/esm/core/type/Units';
+import { Note, TransportTime } from 'tone/build/esm/core/type/Units';
 import { keyState } from './keyState';
 
 type GbNote = {
-  note: string;
+  note: Note;
   dur: string;
 } | null;
 
