@@ -1,13 +1,13 @@
 import * as Tone from 'tone';
 import { keyState } from './keyState';
 
-type BgNote = {
+type GbNote = {
   note: string;
   dur: string;
 } | null;
 
 export type GbChannelData = Required<
-  Required<ConstructorParameters<typeof Tone.Sequence<BgNote>>>[0]['events']
+  Required<ConstructorParameters<typeof Tone.Sequence<GbNote>>>[0]['events']
 >;
 
 const filter = new Tone.AutoFilter({
@@ -32,7 +32,7 @@ export class GbChannel {
   })
     .connect(filter)
     .toDestination();
-  private sequence: Tone.Sequence<BgNote>;
+  private sequence: Tone.Sequence<GbNote>;
 
   constructor(data: GbChannelData) {
     this.sequence = new Tone.Sequence(this.update.bind(this), data, '4n').start(
@@ -41,7 +41,7 @@ export class GbChannel {
     this.sequence.loop = false;
   }
 
-  private update(time: number, value: BgNote) {
+  private update(time: number, value: GbNote) {
     if (!value) return;
 
     const { note, dur } = value;
