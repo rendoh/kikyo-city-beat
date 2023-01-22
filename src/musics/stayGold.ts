@@ -153,20 +153,40 @@ const ch2 = new GbChannel([
 const ch3 = new GbChannel([]);
 
 const noise = new GbNoise([
-  // // 1 --- intro
-  // ['kick', 'snare'],
-  // ['kick', 'kick', 'snare', null],
-  // 'snare',
-  // 'roll',
-  // // 2 --- A
-  // ...[...Array(3)].flatMap(() => noisePatternA),
-  // // 5 ---
-  // ['snare', null, 'kick', 'kick'],
-  // ['snare', 'snare'],
-  // null,
-  // [null, 'kick'],
-  // // 6 --- B
-  // ...[...Array(16)].flatMap(() => noisePatternB),
+  ['kick', null],
+  ['snare', null],
+  ['snare', 'kick'],
+  ['snare', 'kick'],
+
+  ['snare', null],
+  ['snare', 'kick'],
+  ['snare', ['kick', 'kick']],
+  ['snare', 'kick'],
+
+  ['snare', null],
+  ['snare', null],
+  ['snare', 'kick'],
+  ['snare', 'kick'],
+
+  ['roll', null],
+  ['snare', 'kick'],
+  ['snare', ['kick', 'kick']],
+  ['snare', 'kick'],
+
+  ['snare', null],
+  ['snare', null],
+  ['snare', 'kick'],
+  ['snare', 'kick'],
+
+  ['snare', null],
+  ['snare', 'kick'],
+  ['snare', ['kick', 'kick']],
+  ['snare', 'kick'],
+
+  ['kick', 'kick'],
+  ['kick', 'kick'],
+  null,
+  null,
 ]);
 
 class StayGold extends MusicBase {

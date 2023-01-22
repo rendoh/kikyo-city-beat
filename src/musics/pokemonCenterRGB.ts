@@ -162,9 +162,9 @@ const ch1 = new GbChannel(
   ],
   {
     envelope: {
-      sustain: 0.3,
-      attack: 0,
+      attack: 0.01,
       decay: 0.4,
+      sustain: 0.5,
       release: 0.6,
     },
   },
@@ -425,9 +425,9 @@ const ch2 = new GbChannel(
   ],
   {
     envelope: {
-      sustain: 0.3,
-      attack: 0,
+      attack: 0.01,
       decay: 0.4,
+      sustain: 0.5,
       release: 0.6,
     },
   },

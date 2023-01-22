@@ -29,9 +29,9 @@ export class GbChannel {
     {
       volume = -18,
       envelope = {
-        sustain: 1,
         attack: 0,
         decay: 0,
+        sustain: 1,
         release: 0,
       },
     }: RecursivePartial<SynthOptions> = {},
