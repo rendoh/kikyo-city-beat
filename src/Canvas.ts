@@ -56,6 +56,7 @@ export class Canvas {
     const { ctx } = this;
     const { w, h } = sizes;
     ctx.clearRect(0, 0, w, h);
+    ctx.lineJoin = 'round';
     this.radius = Math.min(w, h) * 0.4;
     this.keyboardHeight = Math.min(w, h) / 35;
     ctx.strokeStyle = '#000';
@@ -69,12 +70,21 @@ export class Canvas {
   private drawBall() {
     const { ctx, radius, keyboardHeight } = this;
     const { w, h } = sizes;
+
+    ctx.save();
+    ctx.fillStyle = '#fff';
+    const ballRadius = radius - keyboardHeight / 2;
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, ballRadius, 0, Math.PI * 2, false);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
     ctx.save();
     ctx.fillStyle = '#fc0303';
     ctx.strokeStyle = '#333';
     ctx.lineWidth = Math.min(w, h) / 50;
     ctx.beginPath();
-    const ballRadius = radius - keyboardHeight / 2;
     ctx.arc(w / 2, h / 2, ballRadius, 0, Math.PI, true);
     ctx.translate(w / 2 - ballRadius, h / 2);
     const ratio60 = 0.2;
