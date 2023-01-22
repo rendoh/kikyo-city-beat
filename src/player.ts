@@ -1,9 +1,11 @@
 import * as Tone from 'tone';
 import { canvas } from './Canvas';
 import { kikyoCityBgm } from './musics/kikyoCityBgm';
+import { pokemonCenterRGB } from './musics/pokemonCenterRGB';
 
 const musics = {
   'GB版ポケモン金・銀キキョウシティ': kikyoCityBgm,
+  'GB版ポケモン赤・緑ポケモンセンター': pokemonCenterRGB,
 } as const;
 
 class Player {

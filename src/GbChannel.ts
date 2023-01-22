@@ -1,5 +1,7 @@
 import * as Tone from 'tone';
+import { SynthOptions } from 'tone';
 import { Note, TransportTime } from 'tone/build/esm/core/type/Units';
+import { RecursivePartial } from 'tone/build/esm/core/util/Interface';
 import { keyState } from './keyState';
 
 type GbNote = {
@@ -19,23 +21,31 @@ const filter = new Tone.AutoFilter({
   .start();
 
 export class GbChannel {
-  private synth = new Tone.Synth({
-    volume: -18,
-    oscillator: {
-      type: 'square',
-    },
-    envelope: {
-      sustain: 1,
-      attack: 0,
-      decay: 0,
-      release: 0,
-    },
-  })
-    .connect(filter)
-    .toDestination();
+  private synth: Tone.Synth;
   private sequence: Tone.Sequence<GbNote>;
 
-  constructor(data: GbChannelData) {
+  constructor(
+    data: GbChannelData,
+    {
+      volume = -18,
+      envelope = {
+        sustain: 1,
+        attack: 0,
+        decay: 0,
+        release: 0,
+      },
+    }: RecursivePartial<SynthOptions> = {},
+  ) {
+    this.synth = new Tone.Synth({
+      volume,
+      oscillator: {
+        type: 'square',
+      },
+      envelope,
+    })
+      .connect(filter)
+      .toDestination();
+
     this.sequence = new Tone.Sequence(this.update.bind(this), data, '4n');
     this.sequence.loop = false;
   }
