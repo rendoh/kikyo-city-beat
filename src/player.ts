@@ -13,8 +13,7 @@ class Player {
   public stayGold = stayGold;
   public musics = musics;
   public musicTitles = Object.keys(musics);
-  public selectedMusicTitle: keyof typeof musics =
-    'GB版ポケモン金・銀キキョウシティ';
+  public selectedMusicTitle: keyof typeof musics = 'Hi-STANDARD Stay Gold';
 
   constructor() {
     this.musics[this.selectedMusicTitle].start();

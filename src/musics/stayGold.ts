@@ -4,42 +4,148 @@ import { GbNoise } from '../GbNoise';
 import { MusicBase } from './Music';
 
 const ch1 = new GbChannel([
+  // 1
   [
-    { note: 'B4', dur: '8n' },
-    { note: 'A#4', dur: '8n' },
+    { note: 'B3', dur: '8n' },
+    { note: 'A#3', dur: '8n' },
   ],
   [
-    { note: 'B4', dur: '8n' },
-    { note: 'C#5', dur: '8n' },
+    { note: 'B3', dur: '8n' },
+    { note: 'C#4', dur: '8n' },
   ],
-  [null, { note: 'A#4', dur: '8n' }],
-  [null, { note: 'D5', dur: '4n' }],
+  [null, { note: 'A#3', dur: '8n' }],
+  [null, { note: 'D4', dur: '4n' }],
 
-  [null, { note: 'D5', dur: '8n' }],
-  [null, { note: 'F#5', dur: '4n' }],
-  [null, { note: 'E5', dur: '8n' }],
+  // 2
+  [null, { note: 'D4', dur: '8n' }],
+  [null, { note: 'F#4', dur: '4n' }],
+  [null, { note: 'E4', dur: '8n' }],
   [
-    { note: 'D5', dur: '8n' },
-    { note: 'C5', dur: '8n' },
+    { note: 'D4', dur: '8n' },
+    { note: 'C4', dur: '8n' },
   ],
+
+  // 3
+  [
+    { note: 'B3', dur: '8n' },
+    { note: 'A#3', dur: '8n' },
+  ],
+  [
+    { note: 'B3', dur: '8n' },
+    { note: 'C#4', dur: '8n' },
+  ],
+  [null, { note: 'E4', dur: '8n' }],
+  [null, { note: 'D4', dur: '4n' }],
+
+  // 4
+  [null, { note: 'D4', dur: '8n' }],
+  [null, { note: 'G4', dur: '4n' }],
+  [null, { note: 'F#4', dur: '4n' }],
+  [
+    { note: 'E4', dur: '4n' },
+    { note: 'D4', dur: '4n' },
+  ],
+
+  // 5
+  [
+    { note: 'B3', dur: '8n' },
+    { note: 'A#3', dur: '8n' },
+  ],
+  [
+    { note: 'B3', dur: '8n' },
+    { note: 'C#4', dur: '8n' },
+  ],
+  [null, { note: 'A#3', dur: '8n' }],
+  [null, { note: 'D4', dur: '4n' }],
+
+  // 6
+  [null, { note: 'D4', dur: '8n' }],
+  [null, { note: 'F#4', dur: '4n' }],
+  [null, { note: 'E4', dur: '8n' }],
+  [
+    { note: 'D4', dur: '8n' },
+    { note: 'C4', dur: '8n' },
+  ],
+
+  // 7
+  [
+    { note: 'B3', dur: '8n' },
+    { note: 'A#3', dur: '8n' },
+  ],
+  [
+    { note: 'B3', dur: '8n' },
+    { note: 'C#4', dur: '4n' },
+  ],
+  [null, { note: 'D4', dur: '8n' }],
+  [{ note: 'E4', dur: '8n' }, null],
 ]);
 
 const ch2 = new GbChannel([
+  // 1
   [
-    { note: 'G4', dur: '8n' },
-    { note: 'F#4', dur: '8n' },
+    { note: 'G3', dur: '8n' },
+    { note: 'F#3', dur: '8n' },
   ],
   [
-    { note: 'G4', dur: '8n' },
-    { note: 'F#4', dur: '8n' },
+    { note: 'G3', dur: '8n' },
+    { note: 'F#3', dur: '8n' },
   ],
-  [null, { note: 'F#4', dur: '8n' }],
-  [null, { note: 'B4', dur: '4n' }],
+  [null, { note: 'F#3', dur: '8n' }],
+  [null, { note: 'B3', dur: '4n' }],
 
-  [null, { note: 'B4', dur: '8n' }],
-  [null, { note: 'D5', dur: '4n' }],
+  // 2
+  [null, { note: 'B3', dur: '8n' }],
+  [null, { note: 'D4', dur: '4n' }],
   null,
   null,
+
+  // 3
+  [
+    { note: 'G3', dur: '8n' },
+    { note: 'F#3', dur: '8n' },
+  ],
+  [
+    { note: 'G3', dur: '8n' },
+    { note: 'A3', dur: '8n' },
+  ],
+  [null, { note: 'A3', dur: '8n' }],
+  [null, { note: 'A3', dur: '4n' }],
+
+  // 4
+  [null, { note: 'A3', dur: '8n' }],
+  [null, { note: 'D4', dur: '4n' }],
+  null,
+  null,
+
+  // 5
+  [
+    { note: 'G3', dur: '8n' },
+    { note: 'F#3', dur: '8n' },
+  ],
+  [
+    { note: 'G3', dur: '8n' },
+    { note: 'F#3', dur: '8n' },
+  ],
+  [null, { note: 'F#3', dur: '8n' }],
+  [null, { note: 'B3', dur: '4n' }],
+
+  // 6
+  [null, { note: 'B3', dur: '8n' }],
+  [null, { note: 'D4', dur: '4n' }],
+  null,
+  null,
+
+  // 7
+  [
+    { note: 'G3', dur: '8n' },
+    { note: 'F#3', dur: '8n' },
+  ],
+  [
+    { note: 'G3', dur: '8n' },
+    { note: 'A3', dur: '4n' },
+  ],
+  [null, { note: 'A3', dur: '8n' }],
+  [{ note: 'A3', dur: '8n' }, null],
 ]);
 
 const ch3 = new GbChannel([]);
@@ -70,7 +176,7 @@ class StayGold extends MusicBase {
 
   public start() {
     Tone.Transport.bpm.value = this.bpm;
-    Tone.Transport.setLoopPoints(0, '2m');
+    Tone.Transport.setLoopPoints('0m', '7m');
     this.ch1.start(0);
     this.ch2.start(0);
     this.ch3.start(0);
