@@ -10,14 +10,14 @@ interface Music {
 }
 
 export abstract class MusicBase implements Music {
-  protected abstract ch1: GbChannel;
-  protected abstract ch2: GbChannel;
-  protected abstract ch3: GbChannel;
-  protected abstract noise: GbNoise;
+  protected ch1?: GbChannel;
+  protected ch2?: GbChannel;
+  protected ch3?: GbChannel;
+  protected noise?: GbNoise;
   protected abstract loopPoints: Readonly<[TransportTime, TransportTime]>;
   protected abstract timeSignature: TimeSignature;
   protected abstract startPositions: Readonly<
-    [TransportTime, TransportTime, TransportTime, TransportTime]
+    Partial<[TransportTime, TransportTime, TransportTime, TransportTime]>
   >;
   public abstract bpm: number;
 
@@ -26,20 +26,20 @@ export abstract class MusicBase implements Music {
     Tone.Transport.bpm.value = this.bpm;
     Tone.Transport.setLoopPoints(startPosition, endPosition);
     Tone.Transport.timeSignature = this.timeSignature;
-    this.ch1.start(this.startPositions[0]);
-    this.ch2.start(this.startPositions[1]);
-    this.ch3.start(this.startPositions[2]);
-    this.noise.start(this.startPositions[3]);
+    this.ch1?.start(this.startPositions[0]);
+    this.ch2?.start(this.startPositions[1]);
+    this.ch3?.start(this.startPositions[2]);
+    this.noise?.start(this.startPositions[3]);
   }
 
   public stop() {
-    this.ch1.stop();
-    this.ch2.stop();
-    this.ch3.stop();
-    this.noise.stop();
+    this.ch1?.stop();
+    this.ch2?.stop();
+    this.ch3?.stop();
+    this.noise?.stop();
   }
 
   public mute(ch: 'ch1' | 'ch2' | 'ch3' | 'noise', muted: boolean) {
-    this[ch].mute(muted);
+    this[ch]?.mute(muted);
   }
 }

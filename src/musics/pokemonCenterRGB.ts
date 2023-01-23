@@ -1,5 +1,4 @@
 import { GbChannel } from '../GbChannel';
-import { GbNoise } from '../GbNoise';
 import { MusicBase } from './Music';
 
 const ch1 = new GbChannel(
@@ -733,13 +732,10 @@ const ch3 = new GbChannel(
   },
 );
 
-const noise = new GbNoise([]);
-
 class PokemonCenterRGB extends MusicBase {
   protected ch1 = ch1;
   protected ch2 = ch2;
   protected ch3 = ch3;
-  protected noise = noise;
   public bpm = 133.5;
   protected loopPoints = ['0m', '16m'] as const;
   protected timeSignature = 4;
