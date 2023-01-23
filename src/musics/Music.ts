@@ -24,8 +24,9 @@ export abstract class MusicBase implements Music {
   public start() {
     const [startPosition, endPosition] = this.loopPoints;
     Tone.Transport.bpm.value = this.bpm;
-    Tone.Transport.setLoopPoints(startPosition, endPosition);
     Tone.Transport.timeSignature = this.timeSignature;
+    Tone.Transport.setLoopPoints(startPosition, endPosition);
+    console.log(Tone.Transport.timeSignature);
     this.ch1?.start(this.startPositions[0]);
     this.ch2?.start(this.startPositions[1]);
     this.ch3?.start(this.startPositions[2]);

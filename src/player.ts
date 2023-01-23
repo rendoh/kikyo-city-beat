@@ -1,4 +1,5 @@
 import * as Tone from 'tone';
+import { Time, TransportTime } from 'tone/build/esm/core/type/Units';
 import { canvas } from './Canvas';
 import { kikyoCityBgm } from './musics/kikyoCityBgm';
 import { pokemonCenterRGB } from './musics/pokemonCenterRGB';
@@ -15,7 +16,7 @@ class Player {
   public musics = musics;
   public musicTitles = Object.keys(musics);
   public selectedMusicTitle: keyof typeof musics =
-    'GB版ポケモン金・銀キキョウシティ';
+    'WIP: Hi-STANDARD Stay Gold GBアレンジ';
 
   constructor() {
     this.musics[this.selectedMusicTitle].start();
@@ -27,9 +28,9 @@ class Player {
     musics[title].start();
   }
 
-  public async start() {
+  public async start(time?: Time, offset?: TransportTime) {
     await Tone.start();
-    Tone.Transport.start();
+    Tone.Transport.start(time, offset);
     canvas.start();
   }
 
@@ -40,7 +41,7 @@ class Player {
 
   public async toggle() {
     await Tone.start();
-    Tone.Transport.toggle();
+    Tone.Transport.toggle('+0.1');
     canvas.toggle();
   }
 

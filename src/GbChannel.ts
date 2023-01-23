@@ -1,13 +1,17 @@
 import * as Tone from 'tone';
 import { SynthOptions } from 'tone';
-import { Note, TransportTime } from 'tone/build/esm/core/type/Units';
+import { Note, Time, TransportTime } from 'tone/build/esm/core/type/Units';
 import { RecursivePartial } from 'tone/build/esm/core/util/Interface';
 import { keyState } from './keyState';
 
 type GbNote = {
   note: Note;
-  dur: string;
+  dur: Time;
 } | null;
+
+export function $(note: Note, dur: Time): GbNote {
+  return { note, dur };
+}
 
 export type GbChannelData = Required<
   ConstructorParameters<typeof Tone.Sequence<GbNote>>
