@@ -18,7 +18,7 @@ class Player {
   public musics = musics;
   public musicTitles = Object.keys(musics);
   public selectedMusicTitle: keyof typeof musics =
-    'WIP: GB版ポケモン赤・緑トレーナー戦';
+    'GB版ポケモン金・銀キキョウシティ';
 
   constructor() {
     this.musics[this.selectedMusicTitle].start();
