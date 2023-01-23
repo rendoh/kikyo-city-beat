@@ -41,7 +41,7 @@ export class GbNoise {
       volume: -6,
     },
   }).toDestination();
-  private roll = new Tone.NoiseSynth({
+  private crash = new Tone.NoiseSynth({
     envelope: {
       attack: 0.01,
       decay: 0.3,
@@ -79,8 +79,8 @@ export class GbNoise {
       case 'hihat':
         this.hihat.triggerAttackRelease('8n', time);
         break;
-      case 'roll':
-        this.roll.triggerAttackRelease('8n', time);
+      case 'crash':
+        this.crash.triggerAttackRelease('8n', time);
         break;
     }
   }

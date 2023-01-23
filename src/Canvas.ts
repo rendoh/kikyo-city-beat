@@ -13,7 +13,7 @@ class Canvas {
   private handleTick = this.update.bind(this);
   private handleNoise = ({ detail: { type } }: NoiseEvent) => {
     this.bound = type === 'kick' ? -2 : 0.5;
-    if (type === 'snare' || type === 'roll') {
+    if (type === 'snare' || type === 'crash') {
       this.line = 2.2;
     } else if (type !== 'kick') {
       this.line = 0.5;

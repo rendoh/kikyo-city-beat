@@ -168,7 +168,7 @@ const noise = new GbNoise([
   ['snare', 'kick'],
   ['snare', 'kick'],
 
-  ['roll', null],
+  ['crash', null],
   ['snare', 'kick'],
   ['snare', ['kick', 'kick']],
   ['snare', 'kick'],

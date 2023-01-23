@@ -1,6 +1,6 @@
 import { TypedEventTarget } from './TypedEventTarget';
 
-export type GbNoiseType = 'kick' | 'hihat' | 'snare' | 'roll' | null;
+export type GbNoiseType = 'kick' | 'hihat' | 'snare' | 'crash' | null;
 
 export type NoiseEvent = CustomEvent<{ type: GbNoiseType }>;
 

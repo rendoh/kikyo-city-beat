@@ -976,7 +976,7 @@ const noise = new GbNoise([
   ['kick', 'snare'],
   ['kick', 'kick', 'snare', null],
   'snare',
-  'roll',
+  'crash',
 
   // 2 --- A
   ...[...Array(3)].flatMap(() => noisePatternA),
