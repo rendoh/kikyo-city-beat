@@ -4,10 +4,12 @@ import { canvas } from './Canvas';
 import { kikyoCityBgm } from './musics/kikyoCityBgm';
 import { pokemonCenterRGB } from './musics/pokemonCenterRGB';
 import { stayGold } from './musics/stayGold';
+import { trainerBattleRGB } from './musics/trainerBattleRGB';
 
 const musics = {
   'GB版ポケモン金・銀キキョウシティ': kikyoCityBgm,
   'GB版ポケモン赤・緑ポケモンセンター': pokemonCenterRGB,
+  'WIP: GB版ポケモン赤・緑トレーナー戦': trainerBattleRGB,
   'WIP: Hi-STANDARD Stay Gold GBアレンジ': stayGold,
 } as const;
 
@@ -16,7 +18,7 @@ class Player {
   public musics = musics;
   public musicTitles = Object.keys(musics);
   public selectedMusicTitle: keyof typeof musics =
-    'GB版ポケモン金・銀キキョウシティ';
+    'WIP: GB版ポケモン赤・緑トレーナー戦';
 
   constructor() {
     this.musics[this.selectedMusicTitle].start();

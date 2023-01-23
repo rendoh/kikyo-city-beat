@@ -67,7 +67,7 @@ const ch1 = new GbChannel([
   ],
 
   // 5 ---
-  { note: 'F#5', dur: '3n' },
+  { note: 'F#5', dur: '4n' },
   [
     null,
     [
@@ -97,7 +97,7 @@ const ch1 = new GbChannel([
   ],
 
   // 7 ---
-  { note: 'E5', dur: '3n' },
+  { note: 'E5', dur: '4n' },
   [
     null,
     [
@@ -265,7 +265,7 @@ const ch1 = new GbChannel([
   ],
 
   // 17 ---
-  { note: 'F#6', dur: '3n' },
+  { note: 'F#6', dur: '4n.' },
   null,
   null,
   [
@@ -277,7 +277,7 @@ const ch1 = new GbChannel([
   ],
 
   // 18 ---
-  { note: 'F#6', dur: '3n' },
+  { note: 'F#6', dur: '4n.' },
   null,
   null,
   [
@@ -295,7 +295,7 @@ const ch1 = new GbChannel([
   null,
 
   // 20 ---
-  { note: 'A#5', dur: '3n' },
+  { note: 'A#5', dur: '4n.' },
   [
     null,
     [
