@@ -1,4 +1,3 @@
-import * as Tone from 'tone';
 import { GbChannel } from '../GbChannel';
 import { GbNoise, GbNoiseData } from '../GbNoise';
 import { MusicBase } from './Music';
@@ -997,15 +996,9 @@ class KikyoCityBgm extends MusicBase {
   protected ch3 = ch3;
   protected noise = noise;
   public bpm = 116.6;
-
-  public start() {
-    Tone.Transport.bpm.value = this.bpm;
-    Tone.Transport.setLoopPoints('5m', '21m');
-    this.ch1.start('1m');
-    this.ch2.start('1m');
-    this.ch3.start('1m');
-    this.noise.start();
-  }
+  protected loopPoints = ['5m', '21m'] as const;
+  protected timeSignature = 4;
+  protected startPositions = ['1m', '1m', '1m', 0] as const;
 }
 
 export const kikyoCityBgm = new KikyoCityBgm();

@@ -1,4 +1,3 @@
-import * as Tone from 'tone';
 import { GbChannel } from '../GbChannel';
 import { GbNoise } from '../GbNoise';
 import { MusicBase } from './Music';
@@ -742,15 +741,9 @@ class PokemonCenterRGB extends MusicBase {
   protected ch3 = ch3;
   protected noise = noise;
   public bpm = 133.5;
-
-  public start() {
-    Tone.Transport.bpm.value = this.bpm;
-    Tone.Transport.setLoopPoints('0m', '16m');
-    this.ch1.start(0);
-    this.ch2.start(0);
-    this.ch3.start(0);
-    this.noise.start(0);
-  }
+  protected loopPoints = ['0m', '16m'] as const;
+  protected timeSignature = 4;
+  protected startPositions = [0, 0, 0, 0] as const;
 }
 
 export const pokemonCenterRGB = new PokemonCenterRGB();

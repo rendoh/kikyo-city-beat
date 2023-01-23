@@ -1,3 +1,5 @@
+import * as Tone from 'tone';
+import { TimeSignature, TransportTime } from 'tone/build/esm/core/type/Units';
 import { GbChannel } from '../GbChannel';
 import { GbNoise } from '../GbNoise';
 
@@ -12,9 +14,23 @@ export abstract class MusicBase implements Music {
   protected abstract ch2: GbChannel;
   protected abstract ch3: GbChannel;
   protected abstract noise: GbNoise;
+  protected abstract loopPoints: Readonly<[TransportTime, TransportTime]>;
+  protected abstract timeSignature: TimeSignature;
+  protected abstract startPositions: Readonly<
+    [TransportTime, TransportTime, TransportTime, TransportTime]
+  >;
   public abstract bpm: number;
 
-  public abstract start(): void;
+  public start() {
+    const [startPosition, endPosition] = this.loopPoints;
+    Tone.Transport.bpm.value = this.bpm;
+    Tone.Transport.setLoopPoints(startPosition, endPosition);
+    Tone.Transport.timeSignature = this.timeSignature;
+    this.ch1.start(this.startPositions[0]);
+    this.ch2.start(this.startPositions[1]);
+    this.ch3.start(this.startPositions[2]);
+    this.noise.start(this.startPositions[3]);
+  }
 
   public stop() {
     this.ch1.stop();
