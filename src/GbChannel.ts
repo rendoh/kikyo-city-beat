@@ -62,7 +62,7 @@ export class GbChannel {
     }, time);
     Tone.Draw.schedule(() => {
       keyState.deactivate(note);
-    }, time + Tone.Time(dur).toSeconds());
+    }, time + Tone.Time(dur).toSeconds() - 0.04);
   }
 
   public start(time?: TransportTime, offset?: number) {
