@@ -9,7 +9,7 @@ import { trainerBattleRGB } from './musics/trainerBattleRGB';
 const musics = {
   'GB版ポケモン金・銀キキョウシティ': kikyoCityBgm,
   'GB版ポケモン赤・緑ポケモンセンター': pokemonCenterRGB,
-  'WIP: GB版ポケモン赤・緑トレーナー戦': trainerBattleRGB,
+  'GB版ポケモン赤・緑トレーナー戦': trainerBattleRGB,
   'WIP: Hi-STANDARD Stay Gold GBアレンジ': stayGold,
 } as const;
 

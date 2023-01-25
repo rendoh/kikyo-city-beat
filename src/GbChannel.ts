@@ -6,10 +6,10 @@ import { keyState } from './keyState';
 
 type GbNote = {
   note: Note;
-  dur: Time;
+  dur: Time | (() => Time);
 } | null;
 
-export function $(note: Note, dur: Time): GbNote {
+export function $(note: Note, dur: NonNullable<GbNote>['dur']): GbNote {
   return { note, dur };
 }
 
@@ -58,7 +58,9 @@ export class GbChannel {
     if (!value) return;
 
     const { note, dur } = value;
-    this.synth.triggerAttackRelease(note, dur, time);
+    const duration = typeof dur === 'function' ? dur() : dur;
+
+    this.synth.triggerAttackRelease(note, duration, time);
     Tone.Draw.schedule(() => {
       if (!this.synth.oscillator.mute) {
         keyState.activate(note);
@@ -66,7 +68,7 @@ export class GbChannel {
     }, time);
     Tone.Draw.schedule(() => {
       keyState.deactivate(note);
-    }, time + Tone.Time(dur).toSeconds() - 0.02);
+    }, time + Tone.Time(duration).toSeconds() - 0.02);
   }
 
   public start(time?: TransportTime, offset?: number) {

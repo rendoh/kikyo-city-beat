@@ -10,6 +10,21 @@ const notes = [...Array(octave)].flatMap((_, i) =>
     .map((note) => `${note}${i + 2}`),
 );
 
+function transformFlatToSharp(note: string): string {
+  if (!note.includes('b')) {
+    return note;
+  }
+
+  const [char, actaveStr] = note.split('b');
+  const octave = Number(actaveStr);
+  const index = baseNotes.indexOf(char);
+
+  const sharp = char === 'C' || char === 'F' ? '' : '#';
+  const resultNote = baseNotes.at(index - 1);
+  const resultOctave = char === 'C' ? octave - 1 : octave;
+  return `${resultNote}${sharp}${resultOctave}`;
+}
+
 class KeyState {
   public readonly length = octave * 12;
   public readonly whiteKeyLength = octave * 7;
@@ -19,11 +34,12 @@ class KeyState {
   );
 
   public activate(note: string) {
-    this.state[note] += 1;
+    this.state[transformFlatToSharp(note)] += 1;
   }
 
   public deactivate(note: string) {
-    this.state[note] = Math.max(0, this.state[note] - 1);
+    const n = transformFlatToSharp(note);
+    this.state[n] = Math.max(0, this.state[n] - 1);
   }
 
   public isActiveAt(index: number, sharp?: boolean) {
