@@ -10,7 +10,7 @@ const musics = {
   'GB版ポケモン金・銀キキョウシティ': kikyoCityBgm,
   'GB版ポケモン赤・緑ポケモンセンター': pokemonCenterRGB,
   'GB版ポケモン赤・緑トレーナー戦': trainerBattleRGB,
-  'WIP: Hi-STANDARD Stay Gold GBアレンジ': stayGold,
+  'Hi-STANDARD Stay Gold GBアレンジ': stayGold,
 } as const;
 
 class Player {
